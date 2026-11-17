@@ -8,17 +8,18 @@ Normative project material lives in the planning workspace (`greymonkeyai/projec
 `InstructionsFor*.txt` metaprompts. This workspace is **non-normative** — it records mechanisms,
 procedures, and usage cases; it does not define requirements.
 
-## Two documented concerns
+## Three documented concerns
 
 The harness is not the same thing as the iterative design method and prompt-driven design style
-used to develop this project. This workspace documents both, distinctly:
+used to develop this project. This workspace documents them distinctly:
 
+- **`method/`** — the iterative design method: a procedure unto itself, refined independently
+  of this harness. It predates the harness and would survive different tooling.
 - **Harness mechanisms** — the machinery that makes builds comparable: spec-addressed wave
   prompts, parallel implementation repositories, clarification gates, session orchestration, and
   the evaluation model (`InstructionsForEvaluationModel.txt` in `C:\Project`, provisional).
-- **Usage cases** (`use-cases/`) — the iterative design method and prompt-driven design style
-  documented as exercised *through* the harness. Each usage case is a worked example of the
-  harness serving real development, not a description of the harness itself.
+- **`use-cases/`** — worked examples of the harness serving real development, including the
+  method running on it. Not the method definition itself.
 
 ## Working conventions
 

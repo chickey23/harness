@@ -20,7 +20,9 @@ questions at a fixed count; wait for answers before planning or writing normativ
 
 ## Doc conventions
 
-- `use-cases/` holds usage cases of the harness — worked examples of the iterative design method
-  and prompt-driven design style. Keep each focused; mark provisional status and date.
+- `method/` holds the iterative design method — an independently refined procedure. Changes to it
+  are method revisions, not harness changes.
+- `use-cases/` holds worked examples of the harness in use. Keep each focused; mark provisional
+  status and date.
 - Distinguish the harness (comparison machinery) from the design method (what runs on it) in every
   document.

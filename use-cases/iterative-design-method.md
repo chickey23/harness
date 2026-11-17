@@ -1,34 +1,22 @@
 # Usage case — the iterative design method on the harness
 
-Provisional, 2026-11-16. Non-normative: describes the development process as exercised through
-the harness; it does not define requirements. Distinct from the harness itself — this is the
-method that runs on it.
+Provisional, 2026-11-16. Non-normative: a worked example of the harness serving real
+development.
 
-## The method
+The iterative design method is defined and refined independently in
+[`../method/iterative-design-method.md`](../method/iterative-design-method.md). This document
+is not the method — it records how the method runs *on* this harness, and where the two might
+drift into each other.
 
-A controlled-document pipeline applied to agent instructions:
+## How the harness serves the method
 
-1. **Requirements intake** — purpose, scope, and constraints captured in a spec document, not in
-   session chat.
-2. **Clarification to exhaustion** — every open decision enumerated as a question before planning;
-   no fixed cap on clarifying questions. The clarification log is a versioned artifact.
-3. **Gated build** — the spec passes through external validation (test, SME sign-off, values and
-   design-criteria check) before it is allowed to drive a build.
-4. **Evaluation and restart** — the build is evaluated against the spec; what failed feeds back
-   into the spec document, which is revised, not the chat.
-
-The product that compounds is the spec corpus; sessions and prompts are disposable projections
-of it.
-
-## How the harness serves it
-
-| Mechanism | Role in this method |
+| Harness mechanism | Role in the method's stages |
 |---|---|
-| Spec repo + build repo topology | Spec stays versioned and read-only during a build wave; the build repo is disposable |
-| Wave prompts citing spec by identifier | A session prompt stays small because it addresses the spec, not restates it |
-| Clarification gate (rules + skills) | Enforces exhaustion where agent defaults cap questions |
-| Parallel implementations + evaluation model | The eval step becomes comparison: two realizations of the same spec, scored on the same demonstrations |
-| Session → skill/document feedback | Mid-session corrections are written back into the spec corpus, closing the loop |
+| Spec repo + build repo topology | Stage 1/4: spec stays versioned and read-only during a build wave; the build repo is disposable |
+| Wave prompts citing spec by identifier | Stage 3: a session prompt stays small because it addresses the spec, not restates it |
+| Clarification gate (rules + skills) | Stage 2: enforces exhaustion where agent defaults cap questions |
+| Parallel implementations + evaluation model | Stage 4: eval becomes comparison — two realizations of the same spec scored on the same demonstrations |
+| Session → skill/document feedback | Stage 4: mid-session corrections written back into the spec corpus, closing the loop |
 
 ## Open questions
 
@@ -38,3 +26,5 @@ of it.
   documented checkpoint in the usage case.
 - How the method compresses for small single-prompt builds (the PDF-diff pattern) versus
   multi-wave builds — the same pipeline at different altitudes.
+- Whether mechanical enforcement of the clarification gate (hook/skill) is a method concern or
+  a harness mechanism — currently treated as harness, enforced by documentation only.
