@@ -9,6 +9,9 @@ Documentation workspace for the Avatars development harness. Non-normative.
   do not restate its content wholesale.
 - This workspace documents *how* implementations are built and compared — not *what* an
   implementation must do.
+- **IP separation is deliberate.** This repo lives under `chickey23`, not `greymonkeyai`; the
+  accounts carry separate IP status. Do not move or mirror content into the `greymonkeyai` org
+  without explicit owner direction.
 
 ## Clarification discipline
 
