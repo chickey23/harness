@@ -24,26 +24,17 @@ other.
 
 Resolved by owner direction (2026-11-16): baseline is chosen per direction (fresh or
 modify-and-measure); the default rubric is local and minimal (user satisfaction, user ranking
-required); the owner scores chosen criteria with machine assessment planned via a prompt
-amendment requiring accessible logging of desired criteria; the cycle budget is per direction
-with failure recorded but not auto-retried; splits are new starts and any index of project lines
-is local and non-authoritative; the gate is *clarify sufficiently*, with ambiguous directions
-rejected as inadequate.
+required across the project — see `../harness/rubric.md`); the owner scores chosen criteria with
+machine assessment planned via a prompt amendment requiring accessible logging of criteria named
+per direction (imported from the previous direction by default, derivable from previous
+scoring); the cycle budget is per direction with failure recorded but not auto-retried; splits
+are new starts and any index lives inside the project, non-authoritative; the gate is *clarify
+sufficiently* with ambiguous directions rejected as inadequate — the stricter exhaustion rule is
+the developer's discipline for spec/doc work, deliberately not imposed on cycles; the session
+proposes prompt amendments and the user edits and approves.
 
 Still open:
 
-- **Prompt feedback path.** Log results inform prompt revisions at review points; revisions are
-  adopted only through `C:\Project`'s own process. Who drafts the proposed amendment text —
-  the harness session proposing, or the owner?
-- **Accessible logging.** The prompt amendment must name which criteria builds must log
-  accessibly for machine scoring. Is that list defined by the rubric (single source) or stated
-  per direction?
-- **User ranking scope.** Ranking over what set — approaches within one direction, cycles within
-  a project, or candidates across projects?
-- **Gate calibration.** Per-cycle clarification is *sufficient* while workspace doc discipline
-  stays *exhaustive* — confirm the intended distinction is durable, not a softening of the
-  AGENTS.md convention.
-- **Local index placement.** If an index of project lines is kept, where — a doc here, or inside
-  each project?
-- Whether mechanical enforcement of the clarification gate (hook/skill) is a method concern or
-  a harness mechanism — currently treated as harness, enforced by documentation only.
+- Whether mechanical enforcement of the cycle gate (hook/skill) is a method concern or a
+  harness mechanism — currently treated as harness, enforced by documentation only.
+- JEV-type judge model and scoring interface — anticipated, not yet chosen.

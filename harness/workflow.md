@@ -14,14 +14,15 @@ the **entire application**: one cycle builds a complete implementation and score
 Cycles are judged against a **common rubric**, which is expected to evolve; every scored cycle
 records which rubric revision judged it.
 
-The default rubric is **local to this workspace** and minimal: user satisfaction, with **user
-ranking required** — results are ranked by the user, not only scored. Richer criteria are added
-as needed.
+The default rubric is **local to this workspace** ([`rubric.md`](rubric.md)) and minimal: user
+satisfaction, with **user ranking required** — the user ranks results across a project rather
+than only scoring each in isolation. Richer criteria are added as needed.
 
 Scoring: the owner may be asked to score on a number of chosen criteria. Machine assessment of
 objective criteria is planned for — enabled by amending the prompt to require **accessible
-logging of the desired criteria**, with JEV-type judge models anticipated for machine-assessable
-criteria. Until the `EvaluationModel` publication exists
+logging of the desired criteria**, with JEV-type judge models anticipated. The criteria list is
+stated **per direction**, defaults to the previous direction's list, and may be derived from
+previous scoring. Until the `EvaluationModel` publication exists
 (`MigrateInbound/InstructionsForEvaluationModel.txt` — a reserved slot, provisional), the rubric
 is informal and versioned only by its own revisions.
 
@@ -50,7 +51,9 @@ revisions arrive only at review points.
 ## Cycle gate
 
 A direction is **clarified sufficiently** before cycles run — sufficiency, not exhaustion.
-Ambiguous statements are **rejected as inadequate** rather than run.
+Ambiguous statements are **rejected as inadequate** rather than run. Exhaustive clarification
+remains the developer's discipline for spec and document work (see `../AGENTS.md`); the cycle
+gate is lighter because cycles are cheap to discard.
 
 ## The prompt evolves too
 
@@ -59,9 +62,10 @@ revisions can still be compared, but they compare different things than implemen
 changes. The log records which prompt each cycle ran under so a reviewer knows which kind of
 comparison they are making.
 
-Results inform prompt revisions at review points. Revisions are adopted through the spec
-corpus's own revision process in `C:\Project` — the harness never applies them itself. The
-intention is to develop the workflow here and apply it there: `C:\Project` will be updated
+Results inform prompt revisions at review points: **the harness session drafts proposed
+amendment text; the user edits and approves.** Revisions are adopted through the spec corpus's
+own revision process in `C:\Project` — the harness never applies them itself. The intention is
+to develop the workflow here and apply it there: `C:\Project` will be updated
 (e.g. `D-DevelopmentHarness`, the accessible-logging requirement) before the harness is run.
 
 ## Development log
@@ -78,8 +82,8 @@ workspace. Each cycle appends an entry containing:
 A project folder holds **a line of development**: the implementations and variants its cycles
 produce, plus the log. Log closure is **user-directed** — points of no return (completion,
 splits) are owner calls, not automatic triggers. A split is a new start: a new project folder
-with its own log. An index of project lines may be maintained locally for reference; it is not
-authoritative.
+with its own log. A project may keep an index of its own lines and variants inside the project,
+for reference; it is not authoritative.
 
 ## Locations
 
