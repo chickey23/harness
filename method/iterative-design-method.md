@@ -54,6 +54,10 @@ a single disciplined document loop is a complete instance. The harness becomes n
 the method must scale to parallel builds, coordinated bundles, or cross-implementation
 comparison.
 
+The current harness's operating model (`../harness/workflow.md`) fixes the iteration unit at a
+whole application per cycle and the judge at an evolving rubric. Other instances of the method
+could iterate over different units; the procedure diagram does not presume either.
+
 ## Refinement notes
 
 - Method-vs-harness confusion is the main drift risk: a mechanism adopted for convenience (a
