@@ -2,7 +2,7 @@
 
 Provisional, 2026-11-16. Non-normative. Drafted in this workspace per the develop-here,
 apply-there convention: the owner edits, approves, and adopts through the spec corpus's own
-revision process. Nothing here has been applied to `C:\Project`.
+revision process. **All three changes applied to `C:\Project` on owner direction, 2026-11-16.**
 
 Two proposed changes: revise `D-DevelopmentHarness` to match the settled operating model, and
 add an evaluability requirement to `ProjectPrompt.md` so builds can be machine-scored later.
