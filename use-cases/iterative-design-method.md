@@ -31,10 +31,14 @@ scoring); the cycle budget is per direction with failure recorded but not auto-r
 are new starts and any index lives inside the project, non-authoritative; the gate is *clarify
 sufficiently* with ambiguous directions rejected as inadequate — the stricter exhaustion rule is
 the developer's discipline for spec/doc work, deliberately not imposed on cycles; the session
-proposes prompt amendments and the user edits and approves.
+proposes prompt amendments and the user edits and approves. Mechanical enforcement is a harness
+concern, realized as hooks in the project's `.devin/` config; the JEV is a separate `devin -p`
+session pinned to a cheap model emitting JSON verdicts — see `../harness/implementation.md`.
 
 Still open:
 
-- Whether mechanical enforcement of the cycle gate (hook/skill) is a method concern or a
-  harness mechanism — currently treated as harness, enforced by documentation only.
-- JEV-type judge model and scoring interface — anticipated, not yet chosen.
+- The check logic inside the gate hooks (what counts as "ambiguous" / a complete log entry) —
+  evolves per project with use.
+- Whether low judge confidence triggers automatic frontier-model escalation or just flags for
+  the owner.
+- Cloud sessions for unattended multi-cycle runs — deferred until local runs are stable.

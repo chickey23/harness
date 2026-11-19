@@ -24,7 +24,8 @@ questions at a fixed count; wait for answers before planning or writing normativ
 
 - `method/` holds the iterative design method — an independently refined procedure. Changes to it
   are method revisions, not harness changes.
-- `harness/` holds the harness machinery itself — `workflow.md` is the operating model.
+- `harness/` holds the harness machinery itself — `workflow.md` is the operating model,
+  `rubric.md` the working rubric, `implementation.md` the current Devin-CLI realization.
 - `use-cases/` holds worked examples of the harness in use. Keep each focused; mark provisional
   status and date.
 - Distinguish the harness (comparison machinery) from the design method (what runs on it) in every
