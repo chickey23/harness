@@ -15,4 +15,7 @@ baseline is expensive to unwind.
 6. **Judge model** — default: a cheap fast model (`swe` family), distinct from the builder's.
    Override?
 7. **Coordinator-side gate** — if this folder is not the project folder, install the direction
-   gate here as well? (Default: yes.)
+   gate here as well? (Default: yes.) **First check this folder's own conventions** — read its
+   `AGENTS.md` / rules: if the folder is a durable corpus or doc workspace that should not hold
+   incidental machinery (e.g. `C:\Project`), suggest a separate build/coordinator folder
+   instead, then take the owner's response.

@@ -22,7 +22,10 @@ A session in any folder may be told "look in `C:\Harness` and set up to run it i
 (or another folder). That folder is the coordinator home; the **project folder is wherever the
 owner says it is** — usually the same folder, but not necessarily.
 
-1. Read `C:\Harness\AGENTS.md` (boundaries) and this runbook.
+1. Read `C:\Harness\AGENTS.md` (boundaries) and this runbook. Also read the session folder's
+   *own* conventions (`AGENTS.md`, rules): if the coordinator home is a durable corpus or doc
+   workspace that should not hold incidental machinery — e.g. `C:\Project` — suggest a separate
+   build/coordinator folder and take the owner's response before writing `.devin/` anywhere.
 2. Work through [`templates/intake.md`](templates/intake.md): **prompt the owner for every
    detail not already stated** — project folder, line name, prompt reference, baseline, first
    direction, judge model. Do not guess.
