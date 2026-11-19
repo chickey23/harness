@@ -31,15 +31,16 @@ depend on it — recorded so a project folder knows what to carry.
 ## Mechanical gates
 
 Enforcement lives in the **project folder's `.devin/` config**, so the machinery travels with
-the project rather than relying on documentation or global setup:
+the project rather than relying on documentation or global setup. Starter files ship in
+[`templates/`](templates/):
 
-- `UserPromptSubmit` hook — the direction gate: injects gate requirements / rejects ambiguous
-  directions as inadequate.
+- `UserPromptSubmit` hook (in `.devin/hooks.v1.json`) — the direction gate: injects gate
+  requirements / rejects ambiguous directions as inadequate.
 - `Stop` hook — the completion gate: blocks a build session from finishing before its devlog
   entry exists.
 - The judge role definition may also be kept as `.devin/agents/jev.md` (model pin, restricted
   tools, verdict contract) so the same definition can serve a future subagent path; the primary
-  path is the separate `-p` session.
+  path is the separate `-p` session driven by `.devin/jev-prompt.md`.
 
 A project folder therefore carries: `.devin/` config, `devlog.md`, and the implementation
 itself — alongside the dev/test data in `C:\Other Projects`.

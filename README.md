@@ -16,9 +16,9 @@ used to develop this project. This workspace documents them distinctly:
 - **`method/`** — the iterative design method: a procedure unto itself, refined independently
   of this harness. It predates the harness and would survive different tooling.
 - **`harness/`** — the machinery that makes builds comparable: the operating model
-  (`harness/workflow.md`), spec-addressed wave prompts, parallel implementation repositories,
-  clarification gates, session orchestration, and the evaluation model
-  (`InstructionsForEvaluationModel.txt` in `C:\Project`, provisional).
+  (`workflow.md`), working rubric (`rubric.md`), Devin-CLI realization (`implementation.md`),
+  operator procedure (`runbook.md`), copyable per-project files (`templates/`), and the
+  evaluation model (`InstructionsForEvaluationModel.txt` in `C:\Project`, provisional).
 - **`use-cases/`** — worked examples of the harness serving real development, including the
   method running on it. Not the method definition itself.
 
