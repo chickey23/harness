@@ -6,9 +6,10 @@ depend on it — recorded so a project folder knows what to carry.
 
 ## Roles
 
-- **Coordinator session** — the interactive Devin session the owner talks to. Receives
-  directions, applies the cycle gate (clarify sufficiently; reject ambiguous), drives the
-  per-direction cycle budget, and drafts prompt-amendment proposals at review.
+- **Coordinator session** — the interactive Devin session the owner talks to, in whatever folder
+  the owner opened it (the coordinator home — usually, not necessarily, the project folder).
+  Receives directions, applies the cycle gate (clarify sufficiently; reject ambiguous), drives
+  the per-direction cycle budget, and drafts prompt-amendment proposals at review.
 - **Build session(s)** — disposable Devin sessions running in the project folder. Each cycle
   iterates the entire application (fresh build or modify-and-measure, per the direction's
   baseline).

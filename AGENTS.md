@@ -31,3 +31,10 @@ questions at a fixed count; wait for answers before planning or writing normativ
   status and date.
 - Distinguish the harness (comparison machinery) from the design method (what runs on it) in every
   document.
+
+## Operating the harness
+
+A session in any folder may be asked to set up or run the harness ("look in `C:\Harness` and set
+up to run it here"). Start at `harness/runbook.md` — the intake step first: prompt the owner for
+missing details rather than guessing. The session's folder is the coordinator home; the project
+folder may be elsewhere — the owner points at it.

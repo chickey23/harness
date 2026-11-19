@@ -9,28 +9,44 @@ person or agent session does, in order.
 
 - **Owner** — issues directions, scores and ranks at review, approves prompt amendments, calls
   points of no return.
-- **Coordinator session** — the owner's interactive Devin session; runs anywhere with access to
-  the project folder and this workspace. Applies the gate, drives the cycle budget, drafts
-  amendments.
+- **Coordinator session** — the owner's interactive Devin session; runs wherever the owner
+  opens it (the **coordinator home**). Applies the gate, drives the cycle budget, drafts
+  amendments. The coordinator home is *usually but not necessarily* the project folder.
 - **Build session** — a disposable Devin session running in the project folder.
 - **JEV session** — a separate `devin -p` invocation per scoring event (see
   `implementation.md`).
 
+## 0. Cold start and intake
+
+A session in any folder may be told "look in `C:\Harness` and set up to run it in this folder"
+(or another folder). That folder is the coordinator home; the **project folder is wherever the
+owner says it is** — usually the same folder, but not necessarily.
+
+1. Read `C:\Harness\AGENTS.md` (boundaries) and this runbook.
+2. Work through [`templates/intake.md`](templates/intake.md): **prompt the owner for every
+   detail not already stated** — project folder, line name, prompt reference, baseline, first
+   direction, judge model. Do not guess.
+
 ## 1. Birth a project
 
-The owner names a project folder and points the coordinator at it. Scaffold:
+The owner names the project folder; the coordinator scaffolds it:
 
 ```
 <project>/
   .devin/
-    hooks.v1.json        # ← harness/templates/hooks.v1.json
-    direction-gate.ps1   # ← harness/templates/direction-gate.ps1
-    check-devlog.ps1     # ← harness/templates/check-devlog.ps1
-    jev-prompt.md        # ← harness/templates/jev-prompt.md
+    hooks.v1.json        # ← templates/hooks.v1.json (both gates)
+    direction-gate.ps1   # ← templates/direction-gate.ps1
+    check-devlog.ps1     # ← templates/check-devlog.ps1
+    jev-prompt.md        # ← templates/jev-prompt.md
   prompt.md              # snapshot or citation of the prompt revision in force
-  devlog.md              # ← harness/templates/devlog.md
+  devlog.md              # ← templates/devlog.md
   <implementation…>      # created by the first cycle, or copied baseline
 ```
+
+If the **coordinator home differs** from the project folder, the home may optionally get its
+own `.devin/` with only the direction gate (`hooks.v1.json` carrying just the
+`UserPromptSubmit` entry + `direction-gate.ps1`) — it receives directions but runs no builds,
+so it needs neither the completion gate nor the judge prompt.
 
 The prompt snapshot in `prompt.md` is the revision every cycle in this project answers to,
 until a review adopts a new one.
