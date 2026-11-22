@@ -1,20 +1,21 @@
-# Draft: two-part execution convention set
+# Two-part execution convention set — adoption-ready
 
-Proposed 2026-11-22 for adoption into `C:\Project\MigrateInbound\CONVENTIONS.md` as a new
-**Execution structure** section. Owner satisfied with wording as of this date; classifications
-proposed, pending corpus adoption. Purpose: focus rework and grading on individual parts of a
-build — directions and JEV verdicts address a part, modify-and-measure holds one part frozen.
+Drafted 2026-11-22, ratified by owner same day. Adoption: append as a new
+**Execution structure** section in `C:\Project\MigrateInbound\CONVENTIONS.md`;
+set count 43 → 49.
 
-Origin: owner's Two-Plane Modular Execution & Readiness Gate proposal, decomposed into
-separately-reviewable C-* entries (corpus pattern: each value separately reviewable, cf.
-C-ExplicitPolicies, C-SupportedOS-*).
+Context: the project is `C:\Project` (spec corpus → prompt), builds land in `C:\builds`,
+the harness operates from `C:\Harness`. These conventions inform subsequent builds;
+builds are organized in two-part order. Finer partitioning is deliberately deferred —
+the owner will refine once satisfied with the state of the builds produced. No
+partial-cycle machinery yet.
 
-## Proposed entries
+## Execution structure
 
-| ID | Convention | Proposed class |
-|----|-----------|----------------|
+| ID | Convention | Class |
+|----|-----------|-------|
 | C-TwoPartExecution | The build divides into two parts along the Interactive Readiness Gate: Part 1 covers what the gate's conditions cover; Part 2 is everything after | behavior-shaping |
-| C-ReadinessGate | User interaction unlocks at a declared gate testing two conditions: input readiness (primitive pipelines + primary interactive LLM handles accept and route input) and ledger readiness (essential launch partition mounted, valid, queryable) | behavior-shaping |
+| C-ReadinessGate | User interaction unlocks at a declared gate testing two conditions: input readiness (primitive pipelines + primary interactive LLM handles accept and route input) and ledger readiness (essential launch partition mounted, valid, queryable). The gate records its pass time in accessible evidence — time-to-gate is a named metric | behavior-shaping |
 | C-LaunchPartition | The essential launch slice of the assertion ledger mounts from a dedicated launch file, materialization ordered by modular schema dependencies | realization |
 | C-TransientBoundary | Transient artifacts the ledger schema declares purgeable live in a disposable boundary, independently resettable on failed launch or incomplete cleanup | realization |
 | C-SnapshotInference | Foreground inference (divergent POVs, JEV verification, specialized LLMs) runs in parallel, each task reading its own consistent ledger snapshot — parallel tasks see stable state, not each other's uncommitted work; tool operation within a task is unaffected | realization |
@@ -30,10 +31,14 @@ C-TwoPartExecution ──seam──> C-ReadinessGate <──feeds── C-Launch
 
 ## Deliberately left as implementation choices
 
-Launch-partition membership, launch-file lifecycle, snapshot granularity, gate failure mode,
-subscription hydration mechanism (folded into Part 2's definition, least checkable).
+Launch-partition membership, launch-file lifecycle, snapshot granularity, gate failure
+mode, subscription hydration mechanism.
 
-## Open harness-level item
+## Notes for adoption
 
-Partial cycles — whether a direction may budget iterations on one part with the other frozen —
-belongs in `harness/workflow.md`, not the convention set.
+- The Class column records the ratified classification — it fixes which criterion silent
+  non-conformance costs (parity for realization, completeness for behavior-shaping).
+  Corpus table style carries ID + Convention only; keep the class in this draft or add a
+  third column at owner's preference.
+- Time-to-gate enters directions' named criteria lists as `time-to-gate`; the accessible
+  timestamp is what makes it machine-scorable.
