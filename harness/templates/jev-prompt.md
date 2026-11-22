@@ -5,6 +5,11 @@ folder against the criteria below. Do not modify any files.
 
 <the direction's named criteria, verbatim>
 
+## Standing criteria
+
+<optional: criteria the project scores every cycle regardless of direction — e.g.
+metrics a convention requires builds to emit; delete this section when unused>
+
 ## Evidence
 
 The build is required to emit accessible evidence for these criteria. Locate it — logs,
