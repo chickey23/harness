@@ -1,8 +1,9 @@
-# Two-part execution convention set — adoption-ready
+# Two-part execution convention set — adopted
 
-Drafted 2026-11-22, ratified by owner same day. Adoption: append as a new
-**Execution structure** section in `C:\Project\MigrateInbound\CONVENTIONS.md`;
-set count 43 → 49.
+Drafted and ratified 2026-11-22; adopted same day into
+`C:\Project\MigrateInbound\CONVENTIONS.md` as the **Execution structure**
+section; set count 43 → 49 (commit `cecb3b2`). This file is the retained
+rationale record.
 
 Context: the project is `C:\Project` (spec corpus → prompt), builds land in `C:\builds`,
 the harness operates from `C:\Harness`. These conventions inform subsequent builds;
