@@ -41,6 +41,8 @@ The owner names the project folder; the coordinator scaffolds it:
     direction-gate.ps1   # ← templates/direction-gate.ps1
     check-devlog.ps1     # ← templates/check-devlog.ps1
     jev-prompt.md        # ← templates/jev-prompt.md
+    skills/harness/SKILL.md  # ← templates/skills/harness/SKILL.md (global copy also
+                             #   lives at %APPDATA%\devin\skills\harness\)
   prompt.md              # snapshot or citation of the prompt revision in force
   devlog.md              # ← templates/devlog.md
   <implementation…>      # created by the first cycle, or copied baseline
