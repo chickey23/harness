@@ -26,6 +26,14 @@ previous scoring. Until the `EvaluationModel` publication exists
 (`MigrateInbound/InstructionsForEvaluationModel.txt` — a reserved slot, provisional), the rubric
 is informal and versioned only by its own revisions.
 
+## Project intake
+
+At project intake, derive a candidate **scenario suite** from the project corpus —
+the prompt's observable demonstrations, user-experience reference scenarios, and
+prior builds' test conventions — and propose it for owner sign-off. The suite lives
+project-side; the harness imports and syncs it at review points, it does not own it.
+(Amendment H1, adopted 2026-11-20 — finding F11.)
+
 ## Operating modes
 
 - **Scoring run** — the default. With no criteria given to optimize, a cycle simply scores the
@@ -47,6 +55,11 @@ trigger an automatic rebuild.
 Human review is the fixed point. At times a single build-and-compare is the whole run; as the
 harness matures, the number of cycles between reviews is expected to grow. Directions and rubric
 revisions arrive only at review points.
+
+At each review, named suite scenarios with no enactment evidence are flagged as
+evidence gaps. An anticipated scenario is notable in its absence; a cycle that never
+enacts a named scenario is a finding, not neutral. (Amendment H2, adopted
+2026-11-20 — finding F11.)
 
 ## Cycle gate
 
@@ -77,7 +90,10 @@ workspace. Each cycle appends an entry containing:
   the end of the document, or a citation into another version-controlled document store);
 - the evaluation criteria applied (rubric identity and revision);
 - the results;
-- the user directions that governed the cycle.
+- the user directions that governed the cycle;
+- session start and end at cycle close (for `time to implement`), and which suite
+  scenarios were named among the criteria. (Amendment H4, adopted 2026-11-20 —
+  finding F10.)
 
 A project folder holds **a line of development**: the implementations and variants its cycles
 produce, plus the log. Log closure is **user-directed** — points of no return (completion,

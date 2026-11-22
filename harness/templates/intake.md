@@ -19,3 +19,7 @@ baseline is expensive to unwind.
    `AGENTS.md` / rules: if the folder is a durable corpus or doc workspace that should not hold
    incidental machinery (e.g. `C:\Project`), suggest a separate build/coordinator folder
    instead, then take the owner's response.
+8. **Scenario suite** — derive a candidate suite from the project corpus (the prompt's
+   observable demonstrations, user-experience reference scenarios, prior builds' test
+   conventions) and propose it for owner sign-off; it lives project-side
+   (`.devin/scenarios.md`). Directions then name it so every JEV scores it. (H1/H2.)
