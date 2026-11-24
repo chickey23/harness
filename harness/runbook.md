@@ -22,6 +22,10 @@ A session in any folder may be told "look in `C:\Harness` and set up to run it i
 (or another folder). That folder is the coordinator home; the **project folder is wherever the
 owner says it is** — usually the same folder, but not necessarily.
 
+The standing coordinator home is **`C:\harness-ops`** (adopted 2026-11-23): the owner's
+interactive session runs there, projects live under `C:\builds`, and deployed harness
+tooling lives there. It carries only the direction gate — no builds run in it.
+
 1. Read `C:\Harness\AGENTS.md` (boundaries) and this runbook. Also read the session folder's
    *own* conventions (`AGENTS.md`, rules): if the coordinator home is a durable corpus or doc
    workspace that should not hold incidental machinery — e.g. `C:\Project` — suggest a separate
@@ -41,10 +45,15 @@ The owner names the project folder; the coordinator scaffolds it:
     direction-gate.ps1   # ← templates/direction-gate.ps1
     check-devlog.ps1     # ← templates/check-devlog.ps1
     jev-prompt.md        # ← templates/jev-prompt.md
+    scenarios.md         # intake-derived suite, proposed for owner sign-off (H1)
+    state.json           # ← templates/state.json — coordinator's externalized state
+    acp-build-driver.py  # ← detached build/JEV spawn (see implementation.md)
     skills/harness/SKILL.md  # ← templates/skills/harness/SKILL.md (global copy also
                              #   lives at %APPDATA%\devin\skills\harness\)
   prompt.md              # snapshot or citation of the prompt revision in force
   devlog.md              # ← templates/devlog.md
+  display/               # static shell + emitted data.js — added once the harness-ui
+                         #   line ships its first working build (see implementation.md)
   <implementation…>      # created by the first cycle, or copied baseline
 ```
 
@@ -67,12 +76,19 @@ does not run.
 
 ## 3. Run a cycle
 
-1. Build session in the project folder realizes the entire application per the direction.
-2. The build emits accessible evidence for the named criteria — required by the prompt's
-   evaluability paragraph.
-3. Score: invoke the JEV in the project folder, e.g.
-   `devin -p --model <cheap-model> -- (Get-Content .devin/jev-prompt.md -Raw)`
-   with the criteria filled in. Judge model ≠ builder model.
+1. The coordinator **seeds the cycle entry** in `devlog.md` — `### Cycle <n>` with the
+   direction ref, baseline, prompt ref, criteria, and `**Result:** <pending>` — then
+   spawns the build. (Evolved in `C:\builds\project`: the Stop gate blocks while a
+   `<pending>` Result stands, so seeding first is what lets the gate work.)
+2. Build session in the project folder realizes the entire application per the
+   direction — spawned detached via `.devin/acp-build-driver.py` (env: `ACP_CWD`,
+   `ACP_PROMPT_FILE`, `ACP_LOG`, `ACP_STATUS_FILE`, `ACP_TIMEOUT`, `ACP_SESSION` to
+   resume). The build emits accessible evidence for the named criteria — required by
+   the prompt's evaluability paragraph.
+3. Score: run the same driver with `ACP_PROMPT_FILE=.devin/jev-cycle-<n>.md` (a copy of
+   `jev-prompt.md` with the direction's criteria filled in), or invoke the JEV directly,
+   e.g. `devin -p --model <cheap-model> -- (Get-Content .devin/jev-prompt.md -Raw)`.
+   Judge model ≠ builder model.
 4. Append the JSON verdict to `devlog.md` under a new cycle entry (see
    `templates/devlog.md`).
 5. Repeat to the direction's budget. Failed cycles are logged, not auto-retried.

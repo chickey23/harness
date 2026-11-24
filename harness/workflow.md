@@ -106,8 +106,11 @@ for reference; it is not authoritative.
 | Location | Holds |
 |---|---|
 | `C:\Harness` | Harness-specific documents only |
-| each project folder | a line of development: its implementations + the development log |
+| `C:\harness-ops` | the ops/coordinator home — sessions run here, deployed tooling lives here (adopted 2026-11-23) |
+| `C:\builds` | the builds root — project folders live beneath it; a folder carrying `.devin/` machinery + `devlog.md` is a project |
 | `C:\Other Projects` | dev/test data for this project |
 | `C:\Project` | the normative spec corpus — cited, not mirrored |
 
-The owner points the harness at each project folder; there is no discovery or naming convention.
+The owner still points the harness at each project folder, but `C:\builds` is the scan
+root (adopted 2026-11-23): tooling — the status display, any fleet view — discovers
+projects by machinery presence rather than being told their paths.

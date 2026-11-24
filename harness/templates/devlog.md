@@ -11,11 +11,24 @@ project; it is pointed at by the owner and is not authoritative outside this pro
 - **Baseline:** fresh | modify-and-measure from <ref>
 - **Prompt:** <"embedded below" or citation + revision>
 - **Criteria (rubric revision):** <named criteria>
-- **Result:** <what was built; where it lives>
+- **Result:** <pending>  <!-- coordinator seeds the entry at spawn; the build fills
+     Result before its session may stop (Stop gate), and the verdict lands after the
+     JEV session runs -->
 - **Verdict:**
 
 ```json
-{ "criteria": [], "overall": 0, "judge_model": "", "notes": "" }
+{
+  "criteria": [
+    { "name": "...", "score": 0, "evidence": ["path:line"], "confidence": 0.0, "user_opinion": null }
+  ],
+  "overall": 0,
+  "metrics": {},
+  "judge_model": "",
+  "user_commentary": [],
+  "scenarios": [],
+  "conventions": [],
+  "notes": ""
+}
 ```
 
 - **Owner review:** <scores, rank among the project's candidates, notes>

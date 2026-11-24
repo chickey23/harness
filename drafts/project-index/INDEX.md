@@ -37,13 +37,13 @@ Three tiers, in order of binding force:
 | `README.md` | Purpose, scope, navigation | current |
 | `Design/MAXIMS.md` | M-* design principles | canonical, living |
 | `Design/MAXIMS_explained.md` | M-* commentary — same identifiers and order | canonical, living |
-| `MigrateInbound/ProjectPrompt.md` | The developing normative prompt | in development (MetaPrompt: `InstructionsForProjectPrompt.txt`) |
+| `MigrateInbound/ProjectPrompt.md` | The developing normative prompt | working (owner ruling 2026-11-23; MetaPrompt: `InstructionsForProjectPrompt.txt`) |
 | `MigrateInbound/ECOSYSTEM.md` | E-* ecosystem elements | planning draft 2026-09-24 |
 | `MigrateInbound/ECOSYSTEM_explained.md` | E-* commentary, unresolved boundaries | planning draft |
 | `MigrateInbound/ECOSYSTEM_ASSESSMENT.md` | Assessment of the ecosystem model | review aid |
 | `MigrateInbound/GLOSSARY.md` | G-* local terms; maintain during planning, freeze during implementation | planning draft |
 | `MigrateInbound/DESIGN_CHOICES.md` | D-* realization records | planning draft 2026-09-24 |
-| `MigrateInbound/CONVENTIONS.md` | C-* convention set (43) | adopted 2026-11-19 |
+| `MigrateInbound/CONVENTIONS.md` | C-* convention set (49) | adopted 2026-11-19; living — additions via review (latest: Execution structure, 2026-11-22) |
 | `MigrateInbound/InstructionsForConventions.txt` | Convention mechanics: challenge, adjudication, addition grounds | protocol |
 | `MigrateInbound/InstructionsForProjectPrompt.txt` | MetaPrompt — governs prompt development | protocol |
 | `MigrateInbound/InstructionsForMAXIMS.txt` | MAXIMs derivation notes (incl. M-Convention corollary) | protocol |
@@ -61,6 +61,7 @@ Three tiers, in order of binding force:
 | `MigrateInbound/Devin comparison.md` | Historical implementation comparison | record |
 | `MigrateInbound/.maxims-update/` | Staging copies for MAXIMs revision work | transient |
 | `Reporting/` | Migration reporting outputs | reserved |
+| `MigrateInbound/` | Inbound stage — closed 2026-11-23, retained for reference; name is provenance, contents keep their individual statuses | closed |
 
 ## Boundaries
 

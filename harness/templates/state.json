@@ -1,0 +1,27 @@
+{
+  "line": "<line name>",
+  "prompt_ref": "<embedded prompt.md | citation + revision>",
+  "direction_in_force": {
+    "ref": "<direction file, or null>",
+    "clarity": "draft | clarifying | adequate | signed",
+    "baseline": "fresh | modify-and-measure:<ref>",
+    "budget": { "total": 0, "spent": 0 },
+    "criteria": []
+  },
+  "builds": [
+    {
+      "cycle": 0,
+      "dir": "<build dir>",
+      "approach": "",
+      "session_id": "",
+      "started": "<iso timestamp>",
+      "ended": "<iso timestamp>"
+    }
+  ],
+  "pending_owner_questions": [],
+  "revisions": {
+    "prompt": "<revision id/date of prompt.md>",
+    "conventions": "<convention-set revision in force for the direction, or null>",
+    "scenarios": "<scenario-suite revision in force for the direction, or null>"
+  }
+}

@@ -12,7 +12,8 @@ depend on it — recorded so a project folder knows what to carry.
   the per-direction cycle budget, and drafts prompt-amendment proposals at review.
 - **Build session(s)** — disposable Devin sessions running in the project folder. Each cycle
   iterates the entire application (fresh build or modify-and-measure, per the direction's
-  baseline).
+  baseline). Spawned **detached** — see "Build spawn" below; the coordinator never holds a
+  synchronous wait on a build.
 - **JEV session** — the judge/evaluator, realized as a **separate single-turn session**
   (`devin -p`) per scoring event — not a subagent of the build session, keeping judge and
   builder isolated by construction.
@@ -58,10 +59,100 @@ itself — alongside the dev/test data in `C:\Other Projects`.
 5. At review, the owner scores/ranks; the session drafts prompt amendments; the owner edits and
    approves for `C:\Project` adoption.
 
+## Build spawn
+
+Realized 2026-11-19+ in `C:\builds\project` as `.devin/acp-build-driver.py`: spawns
+`devin acp`, authenticates via `authenticate._meta.api_key` (read from the stored
+credentials file), opens or resumes a session in the project folder, auto-approves
+permission requests, serves fs read/write callbacks, streams the full JSON-RPC log to
+`.devin/*-cycle-*.acp.log`, and on turn end writes a status file
+(`.devin/last-cycle-status.txt` / `last-jev-status.txt`) plus an audible bell so a
+finished — or given-up — session is noticeable away from the chat. The same driver runs
+JEV scoring sessions; env vars override prompt file, log, status file, session id, and
+timeout. The coordinator fires a build and later reads results off the filesystem —
+completion is file-observable because the Stop gate forces the devlog entry.
+
+## Status display
+
+Adopted 2026-11-23. A **read-only, file-derived** status surface over the builds root.
+Design rule: the display derives from artifacts that must exist anyway — it never
+relies on a session reporting status, and hook coverage gaps (no event fires when a
+session dies mid-run) are bridged by inspecting files, not by trusting hooks.
+
+### Architecture
+
+- **Static shell + data payload.** Each project carries `display/` at the project level
+  (above the per-build folders): an `index.html` + JS shell written once at birth, and a
+  `data.js` payload (`window.HARNESS_DATA = {...}`) rewritten each scan. Pages open via
+  `file://` — no server; `data.js` is reloaded by cache-busted script tag, not `fetch`.
+- **Emitter:** PowerShell (`-Once` / `-Watch <sec>`, default 30). Scans `C:\builds` for
+  folders carrying `.devin/` + `devlog.md`. Emits a fleet index at `C:\builds\index.html`
+  plus each project's `display/data.js`.
+- **Refresh:** the page reloads `data.js` every 30s while visible; on refocus, reloads
+  only when the payload's generated-at stamp is newer than what is rendered.
+- **Liveness** = seconds since the newest file mtime under the project, excluding
+  `display/`, `.devin/` internals, and `.git/` — `devlog.md` appends count as activity.
+  No heartbeat contract on builds. Driver status files are shown verbatim.
+
+### Views
+
+- **Fleet index** — one summary row per project (line, direction in force, budget spent,
+  last verdict, liveness), linking down. No cross-project comparison.
+- **Project summary** (default view) — `state.json` fields: prompt ref, direction in
+  force + clarity status, budget, criteria, baseline, builds with timestamps, pending
+  owner questions.
+- **Comparison** — criteria line chart over cycles: one colored line per criterion,
+  sparse (no point where a cycle wasn't scored on it); a **depth picker anchored at the
+  latest** run ("show last N") since the newest build is nearly always in the comparison
+  set; clicking a point opens build detail. Charts use a vendored single-file Chart.js
+  (works over `file://`, native sparse-data handling). Below the chart, a
+  **conventions/scenarios matrix** — id × cycle cells: `conformed` / `reckoned-departure`
+  / `silent-departure` / `not-assessed` for conventions; score + evidence class for
+  scenarios. An un-checked id renders as a visible gap — absence is a finding (H2).
+- **Current state** — a live read of the C-\*/S-\* id sets and prompt revision from
+  `C:\Project`: what the *next* cycle would be judged under, distinct from the
+  per-direction snapshots recorded in `state.json`.
+- **Build detail** — timestamps, the verdict JSON, evidence citations, and a **launch
+  pointer** to the build's emitted launcher artifact (the C-LauncherTests pattern:
+  launcher shortcuts with env baked). Wired only for the most recent run.
+
+### Data sources
+
+| Data | Derived from |
+|---|---|
+| Verdicts (criteria, metrics, scenarios, conventions) | fenced JSON in `devlog.md` cycle entries; `.devin/jev-cycle-*.out` as raw fallback |
+| Direction in force, budget, pending questions | `.devin/state.json` |
+| Build liveness | newest in-scope mtime + `.devin/last-*-status.txt` |
+| Convention/scenario id sets | `C:\Project` live read (current-state view); per-direction snapshot in `state.json` |
+| Launch pointer | the latest build's emitted launcher artifact |
+
+### `state.json`
+
+The coordinator's externalized working state — the artifact that answers "what is
+already known" before anyone asks. Written at intake and when the gate accepts a
+direction (the two hook-enforceable moments). Fields: line name; prompt ref; direction
+in force (ref, clarity status, budget total/spent, criteria, baseline); builds (cycle,
+dir, session id, approach, started/ended); pending owner questions; revision snapshots
+(prompt, conventions, scenarios). Template: `templates/state.json`.
+
+Coordinator contract — **experimental** (2026-11-23; to be refined through the skills
+work, not yet a gate): on every owner prompt, read `state.json`, show its summary, then
+ask only for the delta. Intended to kill redundant intake questions and front-load the
+data the owner needs.
+
+### Provisioning
+
+The display tool is itself a harnessed line of development: `C:\builds\harness-ui`,
+built fresh-from-prompt per cycle like any other. Once a cycle produces a working
+emitter + shell, the shell is mirrored into `templates/display/` so future projects
+carry it at birth.
+
 ## Not yet settled
 
 - The check logic inside the hooks (what makes a direction "ambiguous" or a log entry
   "present") — evolves per project with use.
 - Whether a low judge confidence triggers automatic frontier-model escalation or is simply
   flagged for the owner.
+- How the coordinator contract is enforced — direction-gate injection vs skill/runbook
+  guidance; deliberately experimental for now.
 - Cloud sessions for unattended multi-cycle runs — deferred until local runs are stable.
