@@ -22,4 +22,4 @@ baseline is expensive to unwind.
 8. **Scenario suite** — derive a candidate suite from the project corpus (the prompt's
    observable demonstrations, user-experience reference scenarios, prior builds' test
    conventions) and propose it for owner sign-off; it lives project-side
-   (`.devin/scenarios.md`). Directions then name it so every JEV scores it. (H1/H2.)
+   (`scenarios.md`). Directions then name it so every JEV scores it. (H1/H2.)
