@@ -21,5 +21,9 @@ baseline is expensive to unwind.
    instead, then take the owner's response.
 8. **Scenario suite** — derive a candidate suite from the project corpus (the prompt's
    observable demonstrations, user-experience reference scenarios, prior builds' test
-   conventions) and propose it for owner sign-off; it lives project-side
+   conventions) and propose it for owner's approval; it lives project-side
    (`scenarios.md`). Directions then name it so every JEV scores it. (H1/H2.)
+9. **Scenario checks** — before cycles run, verify each named scenario has a present
+   check/test the build can be enacted against; where tests are needed and absent, the
+   direction requires the build to create them. Unchecked named scenarios are adequacy
+   gaps, flagged like unenacted ones at review.

@@ -30,9 +30,15 @@ is informal and versioned only by its own revisions.
 
 At project intake, derive a candidate **scenario suite** from the project corpus —
 the prompt's observable demonstrations, user-experience reference scenarios, and
-prior builds' test conventions — and propose it for owner sign-off. The suite lives
+prior builds' test conventions — and propose it for owner's approval. The suite lives
 project-side; the harness imports and syncs it at review points, it does not own it.
 (Amendment H1, adopted 2026-11-20 — finding F11.)
+
+From the suite, **pathed scenarios** (`P-*`) may be synthesized — ordered interaction
+workflows whose steps compose scenarios and enumerate interface items by normative
+`module.affordance` naming. Building them and checking for gaps follows
+[`pathed-scenarios.md`](pathed-scenarios.md); unconsolidated scenarios are tolerated
+but recorded as gap signs. (Owner direction 2026-11-27.)
 
 ## Operating modes
 
@@ -68,12 +74,33 @@ Ambiguous statements are **rejected as inadequate** rather than run. Exhaustive 
 remains the developer's discipline for spec and document work (see `../AGENTS.md`); the cycle
 gate is lighter because cycles are cheap to discard.
 
+## Scenario checks
+
+Before a cycle runs, the coordinator verifies that every scenario the direction names has a
+**present check or test** the build can be enacted against. Where tests are needed and absent,
+the direction requires the build to create them — a named scenario with no checkable surface is
+an adequacy gap in the direction, not a discovery for the JEV. At review, named-but-unchecked
+scenarios join named-but-unenacted ones as findings. (Owner direction 2026-11-25.)
+
 ## The prompt evolves too
 
 The prompt is versioned and changes over time. Results from cycles run under different prompt
 revisions can still be compared, but they compare different things than implementation-only
 changes. The log records which prompt each cycle ran under so a reviewer knows which kind of
 comparison they are making.
+
+`prompt.md` is **refreshed at the start of every cycle** — re-snapshotted even when the corpus
+revision is unchanged, and amended to record that it is being reused. Each revision carries a
+**preamble**: a version identifier, the assembly timestamp, an assembled-from list naming every
+source document with its own revision date, and the cycle(s) that executed under it.
+
+The prompt is **assembled from an examination of the source documentation**, not a single-file
+copy. The coordinator re-scans the corpus at each assembly for guiding documents a build must
+see — for the `project` line this means `ProjectPrompt.md` plus the `Design/` steering tier
+(`INTENTS.md`, `MAXIMS.md` embedded; `Papers/` and `*_explained` commentaries cited as depth) —
+so steering reaches the build by residency in the artifact it must read, not only by kickoff
+naming. Assembly composes corpus *revisions* project-side; the corpus's own revision process
+still owns what enters `C:\Project`. (Owner direction 2026-11-25.)
 
 Results inform prompt revisions at review points: **the harness session drafts proposed
 amendment text; the user edits and approves.** Revisions are adopted through the spec corpus's
@@ -94,12 +121,74 @@ workspace. Each cycle appends an entry containing:
 - session start and end at cycle close (for `time to implement`), and which suite
   scenarios were named among the criteria. (Amendment H4, adopted 2026-11-20 —
   finding F10.)
+- **build time, two measures** (owner ruling 2026-11-25): `Calendar span` —
+  build date → build date (cycle cadence, includes review/idle gaps); and
+  `LLM build time` — clock time the model is actively working inside the build
+  phase (session-span approximation is acceptable — owner 2026-11-25). Both
+  tracked, neither scored; recorded in the cycle entry and the
+  `builds[]` row of `state.json` (`llm_build_time`, null when not captured).
 
 A project folder holds **a line of development**: the implementations and variants its cycles
 produce, plus the log. Log closure is **user-directed** — points of no return (completion,
 splits) are owner calls, not automatic triggers. A split is a new start: a new project folder
 with its own log. A project may keep an index of its own lines and variants inside the project,
 for reference; it is not authoritative.
+
+## Derivative documents
+
+Cycles produce documents that steer work without being the prompt — directions,
+findings, convention sets, suite revisions, amendment proposals. Each is a
+**derivative doc**: created draft, ruled on by the owner, consumed or adopted,
+superseded. Its state is harness-visible machinery, not prose buried in its own
+header paragraph. (Adopted 2026-11-25 — owner finding: unapproved derivatives
+and their states were untrackable and unnameable.)
+
+**Status vocabulary** — one chain for every kind:
+
+    draft → proposed → approved → in-force → discharged | adopted-upstream
+                          ↘ superseded · rejected (terminal, from any state)
+
+- `draft` — being written; `proposed` — before the owner for a ruling;
+  `approved` — ruled, not yet steering a cycle; `in-force` — actively steering
+  (direction with unspent budget, the live suite, a promoted convention set);
+  `discharged` — ran its course (spent direction; findings mapped into the
+  suite/conventions — `mapped-into` required); `adopted-upstream` — absorbed by
+  `C:\Project` or `C:\Harness` under their own revision processes.
+- **Unapproved = `draft | proposed`** — enumerable, not remembered.
+
+**Doc kinds** — filename pattern → kind:
+
+| Pattern | Kind | Usual terminal states |
+|---|---|---|
+| `direction-NNN.md` | direction | `discharged` (spent), `superseded` |
+| `shortcomings-NNN.md` | shortcomings | `discharged` (`mapped-into` required) |
+| `conventions-NNN.md`, `decision-candidates-NNN.md` | conventions | `adopted-upstream`, `superseded` |
+| `*-amendments-NNN.md` | amendments | `adopted-upstream`, `rejected`, `superseded` |
+| `*-sweep-NNN.md` | analysis | `discharged`, `superseded` |
+| `scenarios.md`, `scenario-*.md` | suite | `superseded` |
+| `configured-sources-NNN.md`, `*-seed-NNN.md` | seed | `superseded` (next seed revision) |
+| `impl-design-NNN.md` | impl-design | `superseded` (next revision — implementation design, working tier, continuously improved) |
+| `prompt.md` | prompt | `superseded` (next snapshot) |
+| `devlog.md` | log | — (`in-force` always) |
+| `AGENTS.md`, `README.md` | — | exempt from the register |
+
+**Status header.** Every derivative doc carries one machine-readable line in its
+first lines:
+
+    <!-- harness-doc kind=shortcomings status=approved since=2026-11-25
+         applies-to=cycle-6 mapped-into=scenarios.md,conventions-004.md -->
+
+`kind` and `status` are required; `since`, `applies-to`, `supersedes`,
+`mapped-into`, `provisional-ids=true` are optional. The coordinator writes the
+header at creation and updates `status=` in the **same edit** as the owner
+action that changes it — state change is not a later bookkeeping pass.
+
+**Register.** `.devin/register.json` is **generated by scanning headers**
+(`register-scan.ps1`), never hand-maintained — the display rule applied to doc
+state: derive from artifacts that must exist anyway. It answers "what is
+unapproved" and "what is in force" as a query. Reference form for owner and
+coordinator alike is **id + status word** (`conventions-004: in-force,
+provisional-ids`) — the register is the shared vocabulary.
 
 ## Locations
 

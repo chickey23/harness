@@ -25,6 +25,28 @@ good indicator — completeness absorbs its useful content. Directions may still
 or any other criterion explicitly; the criteria list stays per-direction, defaulting
 to the previous direction's list.
 
+## Criterion kinds
+
+Every scored criterion is one of three kinds (rubric revision 2026-11-27):
+
+- **Measured** — the score reports a measurement of enumerated evidence: check counts,
+  scenario pass ratios, raw timings in seconds (tenths where reasonable). The verdict
+  carries `measure` (raw value + unit) and `method` (how it was taken). The number is
+  the number: review may rule a measurement absent or failed, but neither judge nor
+  owner restyles it into an opinion; enumerated tests themselves are not altered by
+  review. Time-based criteria are measured in seconds, not scored 0–1.
+- **Evaluated** — the judgment layer. The scorer emits a 0–1 score plus a `confidence`
+  ranking expressing how confident the evaluator is in that score — the field exists
+  because these values are uncertain by nature. Owner opinions on evaluated criteria
+  are vibes-based highlights, not audits; an untouched criterion is *unreviewed*, its
+  judge score read as provisional.
+- **User** — scores the user entered (e.g. satisfaction, ranking). The judge emits
+  `null`; the owner's figure lands in `user_opinion` and is taken as indicative of
+  user opinion on the topic, not as a measurement.
+
+Directions declare which named criteria are measured vs evaluated and, for measured
+criteria, the measurement method the build must log accessibly.
+
 ## Machine-assessable criteria
 
 - Each direction may name **desired criteria** that builds must log accessibly, so they can be
@@ -41,5 +63,6 @@ to the previous direction's list.
 - **Owner** scores chosen criteria (satisfaction, ranking) at review points.
 - **Machine (JEV)** scores the direction's named criteria against the build's emitted
   evidence; the JSON verdict is appended to the development log. Verdicts carry
-  `user_opinion` / `user_commentary` slots the owner fills at review — owner silence
-  is agreement.
+  `user_opinion` / `user_commentary` slots the owner fills at review — in this era
+  JEV values are exploratory and owner scoring highlights notable areas; an
+  untouched criterion is unreviewed, not agreed (owner note 2026-11-27).

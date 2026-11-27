@@ -37,9 +37,13 @@ the project rather than relying on documentation or global setup. Starter files 
 [`templates/`](templates/):
 
 - `UserPromptSubmit` hook (in `.devin/hooks.v1.json`) — the direction gate: injects gate
-  requirements / rejects ambiguous directions as inadequate.
+  requirements / rejects ambiguous directions as inadequate. Also regenerates
+  `.devin/register.json` (via `register-scan.ps1`) and injects the register
+  digest — pending approvals, in-force docs, provisional ids — so document state
+  is in context on every prompt.
 - `Stop` hook — the completion gate: blocks a build session from finishing before its devlog
-  entry exists.
+  entry exists. Also blocks while a top-level `*.md` lacks a `harness-doc`
+  status header — unregistered derivatives surface at creation, not at review.
 - The judge role definition may also be kept as `.devin/agents/jev.md` (model pin, restricted
   tools, verdict contract) so the same definition can serve a future subagent path; the primary
   path is the separate `-p` session driven by `.devin/jev-prompt.md`.
@@ -97,10 +101,14 @@ session dies mid-run) are bridged by inspecting files, not by trusting hooks.
 ### Views
 
 - **Fleet index** — one summary row per project (line, direction in force, budget spent,
-  last verdict, liveness), linking down. No cross-project comparison.
+  docs pending/in-force/unregistered, last verdict, liveness), linking down. No
+  cross-project comparison.
 - **Project summary** (default view) — `state.json` fields: prompt ref, direction in
   force + clarity status, budget, criteria, baseline, builds with timestamps, pending
   owner questions.
+- **Documents** — the derivative-doc register: in-force set, pending approvals,
+  provisional ids (pending corpus adoption), current-per-kind, full register table,
+  unregistered top-level docs flagged as gaps (`workflow.md` §Derivative documents).
 - **Comparison** — criteria line chart over cycles: one colored line per criterion,
   sparse (no point where a cycle wasn't scored on it); a **depth picker anchored at the
   latest** run ("show last N") since the newest build is nearly always in the comparison
@@ -122,6 +130,7 @@ session dies mid-run) are bridged by inspecting files, not by trusting hooks.
 |---|---|
 | Verdicts (criteria, metrics, scenarios, conventions) | fenced JSON in `devlog.md` cycle entries; `.devin/jev-cycle-*.out` as raw fallback |
 | Direction in force, budget, pending questions | `.devin/state.json` |
+| Document register (pending, in-force, provisional, unregistered) | `harness-doc` headers on top-level `*.md`, scanned directly — same source `.devin/register.json` derives from |
 | Build liveness | newest in-scope mtime + `.devin/last-*-status.txt` |
 | Convention/scenario id sets | `C:\Project` live read (current-state view); per-direction snapshot in `state.json` |
 | Launch pointer | the latest build's emitted launcher artifact |
@@ -138,14 +147,19 @@ dir, session id, approach, started/ended); pending owner questions; revision sna
 Coordinator contract — **experimental** (2026-11-23; to be refined through the skills
 work, not yet a gate): on every owner prompt, read `state.json`, show its summary, then
 ask only for the delta. Intended to kill redundant intake questions and front-load the
-data the owner needs.
+data the owner needs. Document state rides the same channel: the direction gate
+injects the `register.json` digest (pending / in-force / provisional ids) on
+every prompt, and owner + coordinator refer to docs by **id + status word**
+(`workflow.md` §Derivative documents).
 
 ### Provisioning
 
 The display tool is itself a harnessed line of development: `C:\builds\harness-ui`,
-built fresh-from-prompt per cycle like any other. Once a cycle produces a working
-emitter + shell, the shell is mirrored into `templates/display/` so future projects
-carry it at birth.
+built fresh-from-prompt per cycle like any other. The working emitter + shell is
+mirrored into `templates/display/` so future projects carry it at birth (first
+mirror 2026-11-25, incl. the derivative-doc register derivation). Manual edits to
+the deployed emitter/shell between cycles are recorded here, not in the build's
+own cycle entry — the register views were added this way.
 
 ## Not yet settled
 

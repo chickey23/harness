@@ -21,9 +21,19 @@ Load-bearing rules (details live in the docs — do not restate them into other 
 - **The cycle gate.** Clarify each direction sufficiently before cycles run; reject
   ambiguous directions as inadequate. Exhaustive clarification is the discipline for
   spec/doc work; cycles are cheap to discard.
+- **Scenario-test check.** Before cycles run, verify every scenario the direction names
+  has a present test/check the build can be enacted against — and where tests are needed,
+  they are built. A named scenario with no checkable surface is an adequacy gap in the
+  direction, flagged like an unenacted scenario at review.
 - **Roles stay isolated.** Coordinator (this session), disposable build session(s), and
   the JEV — a separate `devin -p` session per scoring event, pinned to a cheap model
   distinct from the builder's. Judge is never folded into builder.
+- **Derivative docs carry status.** Every direction / shortcomings / conventions /
+  amendments / suite doc gets a `<!-- harness-doc kind=… status=… -->` header at
+  creation; update `status=` in the same edit as the owner action that changes
+  it. Refer to docs by **id + status word** (`shortcomings-006: approved`) — the
+  scanned register (`.devin/register.json`) is the shared vocabulary, not prose
+  memory. Unapproved = `draft | proposed`.
 - **Machinery travels with the project.** Gates, `jev-prompt.md`, `scenarios.md`, and
   `devlog.md` live in the project folder — copy from `harness/templates/` at birth.
 - **`C:\Project` is read-only** unless the owner directs otherwise. Cite the spec corpus

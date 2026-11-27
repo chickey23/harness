@@ -27,7 +27,7 @@ of it running on the harness.
                                        │
   3. GATED BUILD                       ▼
      spec passes validation ──► build driven by spec-addressed
-     (test, SME sign-off,         prompts; sessions are disposable
+     (test, SME approval,          prompts; sessions are disposable
       values/design criteria)
                                        │
   4. EVALUATION & RESTART              ▼
@@ -42,7 +42,7 @@ of it running on the harness.
 ## What is being refined
 
 The object under refinement is the **spec document set**, not the prompt and not the session.
-External validation gates (test, SME sign-off, values/design-criteria check) establish fitness
+External validation gates (test, SME approval, values/design-criteria check) establish fitness
 before build; the build is evidence for the next revision of the spec. Judgment is externalized
 into written criteria so the procedure transfers across people, platforms, and sessions.
 
